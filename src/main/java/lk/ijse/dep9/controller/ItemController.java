@@ -73,10 +73,18 @@ public class ItemController {
     }
 
     @GetMapping(params = "q")
-    @Query(value = "SELECT * FROM items WHERE category=?",nativeQuery = true)
-    public String getItemsByCategory(@RequestParam("q") String query){
+    public List<Item> getItemsByCategory(@RequestParam("q") String query){
+        List<Item> itemsByCategory = itemRepository.getItemsByCategory(query);
 
-        return "";
+        return itemsByCategory;
+
+    }
+
+//    @GetMapping(params = "size")
+//    public int getItemsCountByCategory(@RequestParam("size") String size){
+//        int countOfItemsByCategory = itemRepository.getCountOfItemsByCategory(size);
+//        return countOfItemsByCategory;
+
     }
 
 }
