@@ -4,6 +4,7 @@ import lk.ijse.dep9.exception.ResourceNotFoundException;
 import lk.ijse.dep9.model.Item;
 import lk.ijse.dep9.repository.ItemRepository;
 import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -23,7 +24,6 @@ public class ItemController {
 
     @PostMapping()
     public Item createItems(@RequestBody Item item){
-        System.out.println("request came");
         return itemRepository.save(item);
     }
 
@@ -70,6 +70,13 @@ public class ItemController {
         status.put("DELETED ALL ITEMS",Boolean.TRUE);
         return status;
 
+    }
+
+    @GetMapping(params = "q")
+    @Query(value = "SELECT * FROM items WHERE category=?",nativeQuery = true)
+    public String getItemsByCategory(@RequestParam("q") String query){
+
+        return "";
     }
 
 }
